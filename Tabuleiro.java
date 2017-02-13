@@ -4,14 +4,19 @@ class Tabuleiro implements Comparable<Tabuleiro>{
 
   private Integer[][] posic;
   private Ponto zero;
-  
-  Tabuleiro(Tabuleiro t2){
+
+  public Tabuleiro(Tabuleiro t2){
 
   }
+
   public Tabuleiro(int[][] posic){
-    posic = new Integer[lado][lado];
-    this.posic = posic;
+    posic = new Integer[lado][lado](posic);
     this.zero = findZero();
+  }
+
+  //--------Verificar se e possivel chegar a posicao final
+  public Boolean isNotImpossible(){
+
   }
 
   private Ponto findZero(){
@@ -24,9 +29,16 @@ class Tabuleiro implements Comparable<Tabuleiro>{
     System.err.println("Zero not found!");
     System.exit(1);
   }
-
+  /*
+  Vamos ver ainda como e que vamos implementar a igaualdade usando isto ou a hash
   @Override
    public int compareTo(Tabuleiro p) {
 
    }
+
+   @Override
+   public int equals(){
+
+   }
+   */
 }
