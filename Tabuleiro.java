@@ -15,9 +15,33 @@ class Tabuleiro implements Comparable<Tabuleiro>{
   }
 
   //--------Verificar se e possivel chegar a posicao final
-  public Boolean isNotImpossible(){
+  public Boolean isNotImpossible(Tabuleiro target){
+    int[] inicial = new int[lado*lado];
 
+    //organizacao em vetor
+    int number = 0;
+    for (int i =0 ; i < size; ++i)
+      for(int j= 0; j <s ize;++j){
+          inicial[number] = this.posic[i][j];
+          ++number;
+      }
+
+    //calculo da paridade da matriz
+    number = 0
+    for (int i = 0;i < size*size ;++i ) {
+      for (int j = i; j < size*size;++j){
+          if(inicial[i]>inicial[j])
+            number+=1;
+      }
+    }
+
+      // ( (grid width odd) && (#inversions even) )  ||  ( (grid width even) && ((blank on odd row from bottom) == (#inversions even)) )
+      // odd -> impar
+      // even -> par
+      //logo (blank on odd row from bottom) == (#inversions even))
+    return(4-zero.getY()%2 == number%2)
   }
+
 
   private Ponto findZero(){
     for (int i=0;i<lado;++i)
