@@ -15,7 +15,7 @@ class Tabuleiro implements Comparable<Tabuleiro>{
   }
 
   //--------Verificar se e possivel chegar a posicao final
-  public Boolean isNotImpossible(Tabuleiro target){
+  public Boolean isNotImpossible(){
     int[] inicial = new int[lado*lado];
 
     //organizacao em vetor
@@ -69,10 +69,15 @@ class Tabuleiro implements Comparable<Tabuleiro>{
    public int compareTo(Tabuleiro p) {
 
    }
-
-   @Override
-   public int equals(){
-
-   }
    */
+   @Override
+   public Boolean equals(Tabuleiro p2){
+     Tabuleiro p1 = this;
+     for (int i=0;i<lado;++i)
+      for (int j=0;j<lado;++j)
+        if(p1.posic[i][j]!=p2.posic[i][j])
+          return false;
+     return true;
+   }
+
 }
