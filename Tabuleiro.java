@@ -39,9 +39,19 @@ class Tabuleiro implements Comparable<Tabuleiro>{
       // odd -> impar
       // even -> par
       //logo (blank on odd row from bottom) == (#inversions even))
-    return(4-zero.getY()%2 == number%2)
+    return(4-zero.getY()%2 == number%2);
   }
 
+  public String toString() {
+    String s = new String();
+    for (int i = 0;i < size;++i ) {
+      for (int j = 0; j < size;++j){
+          s += " " + posic[i][j];
+      }
+      s += "\n";
+    }
+    return s;
+  }
 
   private Ponto findZero(){
     for (int i=0;i<lado;++i)
