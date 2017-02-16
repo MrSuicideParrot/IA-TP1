@@ -1,6 +1,6 @@
 public class Ponto {
 	private int x,y;
-
+	private final int max = 4;
 	public int getX(){
 		return x;
 	}
@@ -11,6 +11,9 @@ public class Ponto {
 
 	public Ponto(){
 		x = y = 0;
+	}
+	public Boolean verify(){
+		return 0 <= x < max && 0 <= y < max;
 	}
 
 	public Ponto(int x0, int y0){
