@@ -12,7 +12,7 @@ public class Ponto {
 	public Ponto(){
 		x = y = 0;
 	}
-	public Boolean verify(){
+	public Boolean isValid(){
 		return 0 <= x < max && 0 <= y < max;
 	}
 
