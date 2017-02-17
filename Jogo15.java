@@ -17,7 +17,7 @@ class Jogo15{
 
       }
       else{
-        for(LinkedList<Tabuleiro> tabu: node.tabu.makeDescendents()){
+        for(Tabuleiro tabu: node.tabu.makeDescendents()){
 
         }
       }
