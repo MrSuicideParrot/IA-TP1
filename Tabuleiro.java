@@ -84,11 +84,21 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
     Arrays.fill(visited,false);
     Queue fila = new Queue();
     int[] posicao = {x,y,0}; //pq o java nao e tao fixe como python e nao tem tuplos levando nos a fazer coisas feias
+    fila.add(posicao);
     visited[x][y] = true;
     while(!fila.isEmpty()){
       posicao = fila.poll();
-      if()
+      if(final[posicao[0]][posicao[1]]==posic[x][y]){
+        return posicao[0];
+      }
+      for (int i = 0;i < size ;++i) {
+        if (Ponto.isValid(posicao[0]+moveX[i],posicao[1]+moveY[i])) {
+          fila.add({posicao[0]+moveX[i],posicao[1]+moveY[i],posicao[2]+1});
+        }
+      }
     }
+    System.err.println("Deu problemas o distToEnd!!!!");
+    return null;
   }
 
   public String toString() {
