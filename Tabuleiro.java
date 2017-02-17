@@ -5,8 +5,12 @@ class Tabuleiro implements Comparable<Tabuleiro>{
   private Integer[][] posic;
   private Ponto zero;
 
-  public Tabuleiro(Tabuleiro t2){
-
+  public Tabuleiro(Tabuleiro p2, Ponto target){
+    p1 = this;
+    p1.posic = newInteger(p2.posic);
+    p1.zero = target;
+    p1.posic[p2.zero.getX()][p2.zero.getY()]= new Integer(p1.posic[target.getX()][target.getY()]);
+    p1.posic[target.getX()][target.getY()] = 0;
   }
 
   public Tabuleiro(int[][] posic){
@@ -40,6 +44,25 @@ class Tabuleiro implements Comparable<Tabuleiro>{
       // even -> par
       //logo (blank on odd row from bottom) == (#inversions even))
     return(4-zero.getY()%2 == number%2);
+  }
+  public Tabuleiro[] makeDescendents(Boolean repetidos, Hashmap registo){
+    LinkedList<Tabuleiro> descendentes = new LinkedList<Tabuleiro>();
+    int[] moveX ={0, 1, 0, -1};
+    int[] moveY ={-1, 0, 1, 0};
+    for(int i = 0; i < 4; ++i){
+      Ponto ponto = new Ponto(moveX[i],moveY[i]);
+      if(!ponto.isValid()){
+        // ver se elimina o ponto
+        continue;
+      }
+      tabu = new Tabuleiro(this, new Ponto(moveX[i],moveY[i]));
+      if(repetidos){
+        if(registo.containsKey(tabu))
+          //eliminar tabuleiro
+          continue;
+      }
+      descendentes.addFirst(tabu);
+    }
   }
 
   public String toString() {

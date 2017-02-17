@@ -1,8 +1,30 @@
 import Tabuleiro;
 import java.util.Scanner;
+import LinkedList;
+import Node;
 
 class Jogo15{
   private final int lado = 4;
+
+  private void generalSearchAlgorithm(Callable<t> func){
+    //contadores
+    long numeroNos = 0; //Numero de nos gerados
+    //final = new Node()
+    LinkedList queue = new LinkedList();
+    while (!queue.isEmpty()) {
+      Node node = queue.pop()
+      if (node.tabu.equals(final)) {
+
+      }
+      else{
+        for(LinkedList<Tabuleiro> tabu: node.tabu.makeDescendents()){
+
+        }
+      }
+
+    }
+    System.err.println("Erro: Solucao nao encontrada!!!");
+  }
 
   public static void main(String[] args) {
     Scanner input = new Scanner(System.in);
