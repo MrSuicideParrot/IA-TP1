@@ -3,11 +3,12 @@ import java.util.LinkedList;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.*;
 //
 // Classe que implementa ponto
 //
 
-public class Ponto {
+class Ponto {
 	private int x,y;
 	private final int max = 4;
 	public int getX(){
@@ -42,8 +43,8 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
   private Ponto zero;
 
   public Tabuleiro(Tabuleiro p2, Ponto target){
-    p1 = this;
-    p1.posic = newInteger(p2.posic);
+    Tabuleiro p1 = this;
+    //p1.posic = new Integer(p2.posic);
     //System.arraycopy(p2.posic, 0,p1.posic, 0, p2.length );
     p1.zero = target;
     p1.posic[p2.zero.getX()][p2.zero.getY()]= new Integer(p1.posic[target.getX()][target.getY()]);
@@ -82,7 +83,7 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
       //logo (blank on odd row from bottom) == (#inversions even))
     return(4-zero.getY()%2 == number%2);
   }
-  public Tabuleiro[] makeDescendents(Hashmap registo){
+  public Tabuleiro[] makeDescendents(Map registo){
     LinkedList<Tabuleiro> descendentes = new LinkedList<Tabuleiro>();
     int[] moveX ={0, 1, 0, -1};
     int[] moveY ={-1, 0, 1, 0};
@@ -207,7 +208,7 @@ class Node implements Comparable<Node>{
 
 // ---------- Metodos de enque
 class Search{
-  public HashMap map = null;
+  public Map<Tabuleiro,Ponto> map = null;
   public int max = -1; //maximod e profundidade se colocar -1 nao existe maximo
   public void add(Tabuleiro tabu, int altura,Ponto zero){}
 }
@@ -254,7 +255,7 @@ class Bfs extends Search{
   public LinkedList queue;
 
   public Bfs(){
-    map = new HashMap();
+    map = new HashMap<Tabuleiro,Ponto>();
     queue = new LinkedList();
   }
   @Override
