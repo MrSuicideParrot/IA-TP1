@@ -46,7 +46,7 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
       //logo (blank on odd row from bottom) == (#inversions even))
     return(4-zero.getY()%2 == number%2);
   }
-  public Tabuleiro[] makeDescendents(Boolean repetidos, Hashmap registo){
+  public Tabuleiro[] makeDescendents(Hashmap registo){
     LinkedList<Tabuleiro> descendentes = new LinkedList<Tabuleiro>();
     int[] moveX ={0, 1, 0, -1};
     int[] moveY ={-1, 0, 1, 0};
@@ -57,7 +57,7 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
         continue;
       }
       tabu = new Tabuleiro(this, new Ponto(moveX[i],moveY[i]));
-      if(repetidos){
+      if(registo != null){
         if(registo.containsKey(tabu))
           //eliminar tabuleiro
           continue;
