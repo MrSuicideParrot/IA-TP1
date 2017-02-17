@@ -1,5 +1,6 @@
 import Ponto;
-class Tabuleiro implements Comparable<Tabuleiro>{
+import java.util.Queue;
+class Tabuleiro{ // implements Comparable<Tabuleiro>{
   private final int lado = 4;
 
   private Integer[][] posic;
@@ -49,7 +50,7 @@ class Tabuleiro implements Comparable<Tabuleiro>{
     LinkedList<Tabuleiro> descendentes = new LinkedList<Tabuleiro>();
     int[] moveX ={0, 1, 0, -1};
     int[] moveY ={-1, 0, 1, 0};
-    for(int i = 0; i < 4; ++i){
+    for(int i = 0; i < lado; ++i){
       Ponto ponto = new Ponto(moveX[i],moveY[i]);
       if(!ponto.isValid()){
         // ver se elimina o ponto
@@ -62,6 +63,31 @@ class Tabuleiro implements Comparable<Tabuleiro>{
           continue;
       }
       descendentes.addFirst(tabu);
+    }
+    return descendentes;
+  }
+
+  public int distToEnd(Tabuleiro final){
+    int aux = 0;
+    for (int i = 0;i < lado; ++i) {
+      for (int j = 0;j < lado; ++j) {
+        aux += distToEnd(i,j,final);
+      }
+    }
+    return aux;
+  }
+
+  private int distToEnd(int x, int y, Tabuleiro final){
+    int[] moveX = {0, 1, 0, -1};
+    int[] moveY = {-1, 0, 1, 0};
+    int[][] visited = new int[size][size];
+    Arrays.fill(visited,false);
+    Queue fila = new Queue();
+    int[] posicao = {x,y,0}; //pq o java nao e tao fixe como python e nao tem tuplos levando nos a fazer coisas feias
+    visited[x][y] = true;
+    while(!fila.isEmpty()){
+      posicao = fila.poll();
+      if()
     }
   }
 
