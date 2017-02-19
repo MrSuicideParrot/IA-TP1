@@ -1,7 +1,7 @@
 class Node implements Comparable<Node>{
   private int altura;
   private Tabuleiro tabu;
-  private int heuristica = null;
+  private Integer heuristica = null;
 
   public Node(Tabuleiro tabu, int altura, Boolean heur){
     this.altura = altura;
@@ -12,7 +12,7 @@ class Node implements Comparable<Node>{
   }
 
   @Override
-   public int compareTo(Tabuleiro p) {
+  public int compareTo(Node p) {
     if(this.heuristica < p.heuristica)
       return -1;
     else
