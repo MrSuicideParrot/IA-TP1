@@ -1,21 +1,24 @@
-import Ponto;
 import java.util.Queue;
+import java.util.Map;
+import java.util.HashMap;
+
 class Tabuleiro{ // implements Comparable<Tabuleiro>{
-  private final int lado = 4;
+  private final static int lado = 4;
 
   private Integer[][] posic;
   private Ponto zero;
 
   public Tabuleiro(Tabuleiro p2, Ponto target){
-    p1 = this;
-    p1.posic = newInteger(p2.posic);
+    Tabuleiro p1 = this;
+    MatrixCopy.MatrixCopyFunc(p1.posic,p2.posic);
+    //p1.posic = newInteger(p2.posic);
     p1.zero = target;
     p1.posic[p2.zero.getX()][p2.zero.getY()]= new Integer(p1.posic[target.getX()][target.getY()]);
     p1.posic[target.getX()][target.getY()] = 0;
   }
 
   public Tabuleiro(int[][] posic){
-    posic = new Integer[lado][lado](posic);
+    MatrixCopy.MatrixCopyFunc(this.posic,posic);
     this.zero = findZero();
   }
 
@@ -25,16 +28,16 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
 
     //organizacao em vetor
     int number = 0;
-    for (int i =0 ; i < size; ++i)
-      for(int j= 0; j <s ize;++j){
+    for (int i =0 ; i < lado; ++i)
+      for(int j= 0; j < lado;++j){
           inicial[number] = this.posic[i][j];
           ++number;
       }
 
     //calculo da paridade da matriz
-    number = 0
-    for (int i = 0;i < size*size ;++i ) {
-      for (int j = i; j < size*size;++j){
+    number = 0;
+    for (int i = 0;i < lado*lado ;++i ) {
+      for (int j = i; j < lado*lado;++j){
           if(inicial[i]>inicial[j])
             number+=1;
       }
@@ -46,7 +49,7 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
       //logo (blank on odd row from bottom) == (#inversions even))
     return(4-zero.getY()%2 == number%2);
   }
-  public Tabuleiro[] makeDescendents(Hashmap registo){
+  public Tabuleiro[] makeDescendents(Map registo){
     LinkedList<Tabuleiro> descendentes = new LinkedList<Tabuleiro>();
     int[] moveX ={0, 1, 0, -1};
     int[] moveY ={-1, 0, 1, 0};
@@ -67,20 +70,20 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
     return descendentes;
   }
 
-  public int distToEnd(Tabuleiro final){
+  public int distToEnd(Tabuleiro target){
     int aux = 0;
     for (int i = 0;i < lado; ++i) {
       for (int j = 0;j < lado; ++j) {
-        aux += distToEnd(i,j,final);
+        aux += distToEnd(i,j,target);
       }
     }
     return aux;
   }
 
-  private int distToEnd(int x, int y, Tabuleiro final){
+  private int distToEnd(int x, int y, Tabuleiro target){
     int[] moveX = {0, 1, 0, -1};
     int[] moveY = {-1, 0, 1, 0};
-    int[][] visited = new int[size][size];
+    int[][] visited = new int[lado][lado];
     Arrays.fill(visited,false);
     Queue fila = new Queue();
     int[] posicao = {x,y,0}; //pq o java nao e tao fixe como python e nao tem tuplos levando nos a fazer coisas feias
@@ -88,17 +91,17 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
     visited[x][y] = true;
     while(!fila.isEmpty()){
       posicao = fila.poll();
-      if(final[posicao[0]][posicao[1]]==posic[x][y]){
+      if(target[posicao[0]][posicao[1]]==posic[x][y]){
         return posicao[0];
       }
-      for (int i = 0;i < size ;++i) {
+      for (int i = 0;i < lado ;++i) {
         if (Ponto.isValid(posicao[0]+moveX[i],posicao[1]+moveY[i])) {
-          fila.add({posicao[0]+moveX[i],posicao[1]+moveY[i],posicao[2]+1});
+          int aux[] = {posicao[0]+moveX[i],posicao[1]+moveY[i],posicao[2]+1};
+          fila.add(aux);
         }
       }
     }
     System.err.println("Deu problemas o distToEnd!!!!");
-    return null;
   }
 
   public String toString() {

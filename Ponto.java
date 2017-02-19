@@ -13,7 +13,7 @@ public class Ponto {
 		x = y = 0;
 	}
 	public Boolean isValid(){
-		return 0 <= x < max && 0 <= y < max;
+		return 0 <= x && x < max && 0 <= y &&  y < max;
 	}
 
 	public Ponto(int x0, int y0){

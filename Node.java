@@ -1,5 +1,3 @@
-import Tabuleiro;
-
 class Node implements Comparable<Node>{
   private int altura;
   private Tabuleiro tabu;

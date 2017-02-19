@@ -1,7 +1,4 @@
-import Tabuleiro;
 import java.util.Scanner;
-import LinkedList;
-import Node;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
