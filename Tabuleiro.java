@@ -10,7 +10,7 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
 
   public Tabuleiro(Tabuleiro p2, Ponto target){
     Tabuleiro p1 = this;
-    MatrixCopy.MatrixCopyFunc(p1.posic,p2.posic);
+    MatrixCopy(p1.posic,p2.posic);
     //p1.posic = newInteger(p2.posic);
     p1.zero = target;
     p1.posic[p2.zero.getX()][p2.zero.getY()]= new Integer(p1.posic[target.getX()][target.getY()]);
@@ -20,6 +20,15 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
   public Tabuleiro(int[][] posic){
     MatrixCopy.MatrixCopyFunc(this.posic,posic);
     this.zero = findZero();
+  }
+
+  public static void MatrixCopy(Integer[][] dest,Integer[][] source){
+    dest = new Integer[lado][lado];
+    for (int i = 0;i < lado ;++i ) {
+      for (int j = 0;j <lado ;++j ) {
+        dest[i][j] = source[i][j];
+      }
+    }
   }
 
   //--------Verificar se e possivel chegar a posicao final
