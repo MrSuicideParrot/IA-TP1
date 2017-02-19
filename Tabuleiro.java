@@ -1,6 +1,8 @@
 import java.util.Queue;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Arrays;
 
 class Tabuleiro{ // implements Comparable<Tabuleiro>{
   private final static int lado = 4;
@@ -17,8 +19,8 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
     p1.posic[target.getX()][target.getY()] = 0;
   }
 
-  public Tabuleiro(int[][] posic){
-    MatrixCopy.MatrixCopyFunc(this.posic,posic);
+  public Tabuleiro(Integer[][] posic){
+    MatrixCopy(this.posic,posic);
     this.zero = findZero();
   }
 
@@ -58,7 +60,7 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
       //logo (blank on odd row from bottom) == (#inversions even))
     return(4-zero.getY()%2 == number%2);
   }
-  public Tabuleiro[] makeDescendents(Map registo){
+  public LinkedList<Tabuleiro> makeDescendents(Map registo){
     LinkedList<Tabuleiro> descendentes = new LinkedList<Tabuleiro>();
     int[] moveX ={0, 1, 0, -1};
     int[] moveY ={-1, 0, 1, 0};
@@ -68,7 +70,7 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
         // ver se elimina o ponto
         continue;
       }
-      tabu = new Tabuleiro(this, new Ponto(moveX[i],moveY[i]));
+      Tabuleiro tabu = new Tabuleiro(this, new Ponto(moveX[i],moveY[i]));
       if(registo != null){
         if(registo.containsKey(tabu))
           //eliminar tabuleiro
@@ -92,31 +94,32 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
   private int distToEnd(int x, int y, Tabuleiro target){
     int[] moveX = {0, 1, 0, -1};
     int[] moveY = {-1, 0, 1, 0};
-    int[][] visited = new int[lado][lado];
+    Boolean[][] visited = new Boolean[lado][lado];
     Arrays.fill(visited,false);
-    Queue fila = new Queue();
-    int[] posicao = {x,y,0}; //pq o java nao e tao fixe como python e nao tem tuplos levando nos a fazer coisas feias
+    Queue<Integer[]> fila = new LinkedList<Integer[]>();
+    Integer[] posicao = {x,y,0}; //pq o java nao e tao fixe como python e nao tem tuplos levando nos a fazer coisas feias
     fila.add(posicao);
     visited[x][y] = true;
     while(!fila.isEmpty()){
       posicao = fila.poll();
-      if(target[posicao[0]][posicao[1]]==posic[x][y]){
+      if(target.posic[posicao[0]][posicao[1]]==posic[x][y]){
         return posicao[0];
       }
       for (int i = 0;i < lado ;++i) {
         if (Ponto.isValid(posicao[0]+moveX[i],posicao[1]+moveY[i])) {
-          int aux[] = {posicao[0]+moveX[i],posicao[1]+moveY[i],posicao[2]+1};
+          Integer aux[] = {posicao[0]+moveX[i],posicao[1]+moveY[i],posicao[2]+1};
           fila.add(aux);
         }
       }
     }
     System.err.println("Deu problemas o distToEnd!!!!");
+    return -1;
   }
 
   public String toString() {
     String s = new String();
-    for (int i = 0;i < size;++i ) {
-      for (int j = 0; j < size;++j){
+    for (int i = 0;i < lado;++i ) {
+      for (int j = 0; j < lado;++j){
           s += " " + posic[i][j];
       }
       s += "\n";
@@ -133,6 +136,7 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
     //-------caso nao seja encontrado nenhum zero para o programa
     System.err.println("Zero not found!");
     System.exit(1);
+    return null ;
   }
   /*
   Vamos ver ainda como e que vamos implementar a igaualdade usando isto ou a hash
@@ -141,8 +145,7 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
 
    }
    */
-   @Override
-   public Boolean equals(Tabuleiro p2){
+     public Boolean equals(Tabuleiro p2){
      Tabuleiro p1 = this;
      for (int i=0;i<lado;++i)
       for (int j=0;j<lado;++j)
