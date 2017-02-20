@@ -1,14 +1,22 @@
 class Node implements Comparable<Node>{
-  private int altura;
-  private Tabuleiro tabu;
+  int altura;
+  Tabuleiro tabu;
   private Integer heuristica = null;
 
-  public Node(Tabuleiro tabu, int altura, Boolean heur){
+  public Node(Tabuleiro tabu, int altura, int heur,Tabuleiro target){
     this.altura = altura;
     this.tabu = tabu;
-    if (heur) { // se for true efetua-se o calculo da heuristica
-
+    switch (heur){
+      case 0: //A star
+        heuristica = altura + tabu.distToEnd(target);
+        break;
+      case 1: //gulosa
+        heuristica = altura;
+        break;
+      default:
+        break;
     }
+
   }
 
   @Override

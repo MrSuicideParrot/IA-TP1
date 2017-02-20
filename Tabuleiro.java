@@ -11,6 +11,7 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
   private Ponto zero;
 
   public Tabuleiro(Tabuleiro p2, Ponto target){
+    this.posic = new Integer[lado][lado];
     Tabuleiro p1 = this;
     MatrixCopy(p1.posic,p2.posic);
     //p1.posic = newInteger(p2.posic);
@@ -20,37 +21,55 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
   }
 
   public Tabuleiro(Integer[][] posic){
+    this.posic = new Integer[lado][lado];
     MatrixCopy(this.posic,posic);
     this.zero = findZero();
   }
 
-  public static void MatrixCopy(Integer[][] dest,Integer[][] source){
-    dest = new Integer[lado][lado];
+  public void MatrixCopy(Integer[][] dest,Integer[][] source){
+    //dest = new Integer[lado][lado];
     for (int i = 0;i < lado ;++i ) {
       for (int j = 0;j <lado ;++j ) {
-        dest[i][j] = source[i][j];
+        dest[i][j] = new Integer(source[i][j]);
       }
     }
   }
 
   //--------Verificar se e possivel chegar a posicao final
-  public Boolean isNotImpossible(){
+  public Boolean isNotImpossible(Tabuleiro targetTab){
     int[] inicial = new int[lado*lado];
+    int[] target = new int[lado*lado];
 
     //organizacao em vetor
-    int number = 0;
+    int number1 = 0;
     for (int i =0 ; i < lado; ++i)
       for(int j= 0; j < lado;++j){
-          inicial[number] = this.posic[i][j];
-          ++number;
+          inicial[number1] = this.posic[i][j];
+          ++number1;
       }
 
+    number1 = 0;
+    for (int i =0 ; i < lado; ++i)
+      for(int j= 0; j < lado;++j){
+          target[number1] = targetTab.posic[i][j];
+          ++number1;
+      }
+
+
     //calculo da paridade da matriz
-    number = 0;
+    number1 = 0;
     for (int i = 0;i < lado*lado ;++i ) {
       for (int j = i; j < lado*lado;++j){
           if(inicial[i]>inicial[j])
-            number+=1;
+            number1+=1;
+      }
+    }
+
+    int number2 = 0;
+    for (int i = 0;i < lado*lado ;++i ) {
+      for (int j = i; j < lado*lado;++j){
+          if(target[i]>target[j])
+            number2+=1;
       }
     }
 
@@ -58,7 +77,9 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
       // odd -> impar
       // even -> par
       //logo (blank on odd row from bottom) == (#inversions even))
-    return(4-zero.getY()%2 == number%2);
+    return ((number1 % 2 == 0 && number2 % 2 == 0) || (number1 % 2 == 1 && number2 % 2 == 1));
+
+    //return(4-zero.getY()%2 == number%2);
   }
   public LinkedList<Tabuleiro> makeDescendents(Map registo){
     LinkedList<Tabuleiro> descendentes = new LinkedList<Tabuleiro>();
@@ -95,7 +116,11 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
     int[] moveX = {0, 1, 0, -1};
     int[] moveY = {-1, 0, 1, 0};
     Boolean[][] visited = new Boolean[lado][lado];
-    Arrays.fill(visited,false);
+    //iniciate visited Array
+    for (int i = 0;i <lado ;++i )
+      for (int j = 0;j <lado ;++j )
+        visited[i][j] = false;
+
     Queue<Integer[]> fila = new LinkedList<Integer[]>();
     Integer[] posicao = {x,y,0}; //pq o java nao e tao fixe como python e nao tem tuplos levando nos a fazer coisas feias
     fila.add(posicao);
@@ -138,14 +163,20 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
     System.exit(1);
     return null ;
   }
-  /*
-  Vamos ver ainda como e que vamos implementar a igaualdade usando isto ou a hash
-  @Override
-   public int compareTo(Tabuleiro p) {
+    private void printMATRIX(Integer[][] matriz){
+      for (int i = 0;i < lado ;++i ) {
+        for (int j = 0;j < lado ; ++j) {
+          System.out.print(" "+matriz[i][j]);
+        }
+          System.out.println();
+      }
+    }
+    @Override
+    public int hashCode(){
+		return this.toString().hashCode();
+	}
 
-   }
-   */
-     public Boolean equals(Tabuleiro p2){
+    public boolean equals(Tabuleiro p2){
      Tabuleiro p1 = this;
      for (int i=0;i<lado;++i)
       for (int j=0;j<lado;++j)

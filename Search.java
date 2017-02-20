@@ -1,41 +1,51 @@
-public interface Search{
-  void add(Tabuleiro tabu, int altura,Ponto zero);
-  Node poll();
-  Boolean isEmpty();
+import java.util.Map;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.PriorityQueue;
+
+
+class Astar {
+  public PriorityQueue<Node> queue; //= new PriorityQueue<Node>();
+  private Tabuleiro inicial;
+  private Tabuleiro target;
+  public HashMap mapa = null;
+
+  //contadores
+  private int nosGerados;
+  private int nosVisitados;
+
+  public Astar(Tabuleiro inicial,Tabuleiro target){
+    queue = new PriorityQueue<Node>();
+    this.inicial = inicial;
+    this.target = target;
+    nosGerados = 0;
+    nosVisitados = 0;
+  }
+
+  public void generalSearchAlgorithm(){
+    queue.add(new Node(inicial,0,0,target));
+    while (!queue.isEmpty()) {
+      Node node = queue.poll();
+      ++nosVisitados;
+      if (node.tabu.equals(target)) {
+        System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura);
+      }
+      else{
+        //if(procura.max != node.altura){
+          for(Tabuleiro tabu: node.tabu.makeDescendents(mapa)){
+            queue.add(new Node(tabu, node.altura+1,0,target));
+          }
+        //}
+      }
+
+    }
+    System.err.println("Erro: Solucao nao encontrada!!!");
+  }
 }
+
 /*
-public class Gulosa implements Search{
 
-  Gulosa(){
-
-  }
-
-} */
-
-class Astar implements Search{
-  private PriorityQueue queue;
-
-  public Astar(){
-    queue = PriorityQueue();
-  }
-
-  @Override
-  public Boolean isEmpty(){
-    return queue.isEmpty();
-  }
-
-  @Override
-  public Node poll(){
-    return queue.poll()
-  }
-
-  @Override
-  public void add(Tabuleiro tabu, int altura,Ponto zero){
-    queue.add(new Node(tabu,altura,true));
-  }
-}
-
-class Dfs implements Search{
+class Dfs {
     private LinkedList<Node> queue;
 
     public Dfs(int n){
@@ -59,7 +69,7 @@ class Dfs implements Search{
     }
 }
 
-class Bfs implements Search{
+class Bfs {
   private LinkedList<Node> queue;
   private Map<Integer,Ponto> mapa;
 
@@ -85,3 +95,5 @@ class Bfs implements Search{
       map.put(tabu,zero)
     }
   }
+
+*/
