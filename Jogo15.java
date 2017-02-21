@@ -24,13 +24,25 @@ class Jogo15{
 
     //criacao de tabuleiro final
     target = new Tabuleiro(area);
-
     if(inicial.isNotImpossible(target)){
-      Astar search = new Astar(inicial,target);
-      System.out.println("Iniciar procura");
-      search.generalSearchAlgorithm();
+      System.out.println("Astar:");
+      Astar search1 = new Astar(inicial,target);
+      search1.generalSearchAlgorithm();
+      //System.out.println("Gulosa:");
+      //Gulosa search2 = new Gulosa(inicial,target);
+      //search2.generalSearchAlgorithm();
+      //System.out.println("Dfs:");
+      //Dfs search3 = new Dfs(inicial,target);
+      //search3.generalSearchAlgorithm();
+      System.out.println("IDFS:");
+      IDfs search3 = new IDfs(inicial,target,50);
+      search3.generalSearchAlgorithm();
+
+      //System.out.println("Bfs:");
+      //Bfs search4 = new Bfs(inicial,target);
+      //search4.generalSearchAlgorithm();
     }
-    else
-      System.out.println("isImpossible");
+  //  else
+    //  System.out.println("isImpossible");
   }
 }

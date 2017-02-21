@@ -9,9 +9,11 @@ class Node implements Comparable<Node>{
     switch (heur){
       case 0: //A star
         heuristica = altura + tabu.distToEnd(target);
+        //System.out.println(heuristica);
+        //System.exit(0);
         break;
       case 1: //gulosa
-        heuristica = altura;
+        heuristica = tabu.distToEnd(target);
         break;
       default:
         break;
