@@ -27,6 +27,7 @@ class Jogo15{
 
     if(inicial.isNotImpossible(target)){
       Astar search = new Astar(inicial,target);
+      System.out.println("Iniciar procura");
       search.generalSearchAlgorithm();
     }
     else

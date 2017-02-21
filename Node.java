@@ -1,6 +1,6 @@
 class Node implements Comparable<Node>{
   int altura;
-  Tabuleiro tabu;
+  public Tabuleiro tabu;
   private Integer heuristica = null;
 
   public Node(Tabuleiro tabu, int altura, int heur,Tabuleiro target){
@@ -16,7 +16,6 @@ class Node implements Comparable<Node>{
       default:
         break;
     }
-
   }
 
   @Override

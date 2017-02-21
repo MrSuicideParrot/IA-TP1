@@ -77,7 +77,8 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
       // odd -> impar
       // even -> par
       //logo (blank on odd row from bottom) == (#inversions even))
-    return ((number1 % 2 == 0 && number2 % 2 == 0) || (number1 % 2 == 1 && number2 % 2 == 1));
+      return true;
+    //return ((number1 % 2 == 0 && number2 % 2 == 0) || (number1 % 2 == 1 && number2 % 2 == 1));
 
     //return(4-zero.getY()%2 == number%2);
   }
@@ -86,12 +87,12 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
     int[] moveX ={0, 1, 0, -1};
     int[] moveY ={-1, 0, 1, 0};
     for(int i = 0; i < lado; ++i){
-      Ponto ponto = new Ponto(moveX[i],moveY[i]);
+      Ponto ponto = new Ponto(zero.getX()+moveX[i],zero.getY()+moveY[i]);
       if(!ponto.isValid()){
         // ver se elimina o ponto
         continue;
       }
-      Tabuleiro tabu = new Tabuleiro(this, new Ponto(moveX[i],moveY[i]));
+      Tabuleiro tabu = new Tabuleiro(this, ponto);
       if(registo != null){
         if(registo.containsKey(tabu))
           //eliminar tabuleiro
@@ -106,7 +107,7 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
     int aux = 0;
     for (int i = 0;i < lado; ++i) {
       for (int j = 0;j < lado; ++j) {
-        aux += distToEnd(i,j,target);
+          aux += distToEnd(i,j,target);
       }
     }
     return aux;
@@ -120,15 +121,14 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
     for (int i = 0;i <lado ;++i )
       for (int j = 0;j <lado ;++j )
         visited[i][j] = false;
-
     Queue<Integer[]> fila = new LinkedList<Integer[]>();
     Integer[] posicao = {x,y,0}; //pq o java nao e tao fixe como python e nao tem tuplos levando nos a fazer coisas feias
     fila.add(posicao);
     visited[x][y] = true;
     while(!fila.isEmpty()){
       posicao = fila.poll();
-      if(target.posic[posicao[0]][posicao[1]]==posic[x][y]){
-        return posicao[0];
+      if(target.posic[posicao[0]][posicao[1]].equals(posic[x][y])){
+        return posicao[2];
       }
       for (int i = 0;i < lado ;++i) {
         if (Ponto.isValid(posicao[0]+moveX[i],posicao[1]+moveY[i])) {
@@ -176,13 +176,14 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
 		return this.toString().hashCode();
 	}
 
-    public boolean equals(Tabuleiro p2){
+
+    public boolean equals(Tabuleiro p2 ){
      Tabuleiro p1 = this;
      for (int i=0;i<lado;++i)
       for (int j=0;j<lado;++j)
-        if(p1.posic[i][j]!=p2.posic[i][j])
+        if(!p1.posic[i][j].equals(p2.posic[i][j]))
           return false;
-     return true;
+    return true;
    }
 
 }

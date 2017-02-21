@@ -27,14 +27,18 @@ class Astar {
     while (!queue.isEmpty()) {
       Node node = queue.poll();
       ++nosVisitados;
+      //System.out.println(node.tabu);
       if (node.tabu.equals(target)) {
         System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura);
+        return;
       }
       else{
         //if(procura.max != node.altura){
           for(Tabuleiro tabu: node.tabu.makeDescendents(mapa)){
+          //  System.out.println(tabu);
             queue.add(new Node(tabu, node.altura+1,0,target));
           }
+          //return;
         //}
       }
 
