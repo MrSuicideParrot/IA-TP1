@@ -36,9 +36,9 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
   }
 
   //--------Verificar se e possivel chegar a posicao final
-  public Boolean isNotImpossible(Tabuleiro targetTab){
+  public Boolean isNotImpossible(Tabuleiro targetTab){  //retirar argumento
     int[] inicial = new int[lado*lado];
-    int[] target = new int[lado*lado];
+  //  int[] target = new int[lado*lado];
 
     //organizacao em vetor
     int number1 = 0;
@@ -47,14 +47,14 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
           inicial[number1] = this.posic[i][j];
           ++number1;
       }
-
+/*
     number1 = 0;
     for (int i =0 ; i < lado; ++i)
       for(int j= 0; j < lado;++j){
           target[number1] = targetTab.posic[i][j];
           ++number1;
       }
-
+ */
 
     //calculo da paridade da matriz
     number1 = 0;
@@ -64,7 +64,7 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
             number1+=1;
       }
     }
-
+    /*
     int number2 = 0;
     for (int i = 0;i < lado*lado ;++i ) {
       for (int j = i; j < lado*lado;++j){
@@ -72,15 +72,13 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
             number2+=1;
       }
     }
-
+    */
       // ( (grid width odd) && (#inversions even) )  ||  ( (grid width even) && ((blank on odd row from bottom) == (#inversions even)) )
       // odd -> impar
       // even -> par
       //logo (blank on odd row from bottom) == (#inversions even))
-      return true;
-    //return ((number1 % 2 == 0 && number2 % 2 == 0) || (number1 % 2 == 1 && number2 % 2 == 1));
-
-    //return(4-zero.getY()%2 == number%2);
+      //return true;
+      return( ((4-zero.getY())%2==1)==(number1%2==0)) || (((4-zero.getY())%2==0) == (number1%2==1) ) ;
   }
   public LinkedList<Tabuleiro> makeDescendents(Map registo){
     LinkedList<Tabuleiro> descendentes = new LinkedList<Tabuleiro>();
