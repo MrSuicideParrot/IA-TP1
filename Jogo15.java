@@ -1,13 +1,64 @@
 import java.util.Scanner;
 
+
 class Jogo15{
   private final static int lado = 4;
+  public static Tabuleiro inicial = null;
+  public static Tabuleiro target = null;
 
   public static void main(String[] args) {
+    /*
+    /Tratamento de argumentos
+    /*/
+    if(args.length == 0){
+      //Imprimir o help
+      return;
+    }
+    long startTime = System.currentTimeMillis();
+    switch (args[0].toUpperCase()) {
+      case "ASTAR":
+        scannerTabuleiro();
+        Astar search1 = new Astar(inicial,target,startTime);
+        search1.generalSearchAlgorithm();
+        break;
+
+      case "GULOSO":
+        scannerTabuleiro();
+        Gulosa search2 = new Gulosa(inicial,target,startTime);
+        search2.generalSearchAlgorithm();
+        break;
+
+      case "DFS":
+        scannerTabuleiro();
+        Dfs search3 = new Dfs(inicial,target,startTime);
+        search3.generalSearchAlgorithm();
+        break;
+
+      case "IDFS":
+        if(args.length != 2){
+            System.err.println("Erro: Profundiade do IDFS não inserida!");
+            System.exit(1);
+        }
+        scannerTabuleiro();
+        IDfs search5 = new IDfs(inicial,target,Integer.parseInt(args[1]),startTime);
+        search5.generalSearchAlgorithm();
+        break;
+
+      case "BFS":
+        scannerTabuleiro();
+        Bfs search4 = new Bfs(inicial,target,startTime);
+        search4.generalSearchAlgorithm();
+        break;
+
+      default:
+        System.err.println("Erro: Opção não reconhecida!");
+        break;
+    }
+  }
+
+  private static void scannerTabuleiro(){
     Scanner input = new Scanner(System.in);
     Integer[][] area = new Integer[lado][lado];
-    Tabuleiro inicial;
-    Tabuleiro target;
 
     //Leitura do tabuleiro inicial
     for (int i=0; i<lado; ++i)
@@ -24,24 +75,6 @@ class Jogo15{
 
     //criacao de tabuleiro final
     target = new Tabuleiro(area);
-    //if(inicial.isNotImpossible(target)){
-      System.out.println("Astar:");
-      Astar search1 = new Astar(inicial,target);
-      search1.generalSearchAlgorithm();
-      System.out.println("Gulosa:");
-      Gulosa search2 = new Gulosa(inicial,target);
-      search2.generalSearchAlgorithm();
-      System.out.println("Dfs:");
-      Dfs search3 = new Dfs(inicial,target);
-      search3.generalSearchAlgorithm();
-      System.out.println("IDFS:");
-      IDfs search5 = new IDfs(inicial,target,50);
-      search5.generalSearchAlgorithm();
-      System.out.println("Bfs:");
-      Bfs search4 = new Bfs(inicial,target);
-      search4.generalSearchAlgorithm();
-  //  }
-    //else
-    //System.out.println("isImpossible");
+
   }
 }
