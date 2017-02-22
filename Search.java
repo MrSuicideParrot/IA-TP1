@@ -33,7 +33,7 @@ class Astar {
       if (node.tabu.equals(target)) {
         System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura);
         System.out.println("Numero de nos visitados: "+nosVisitados+" \nNumero de nos gerados: "+nosGerados);
-        node.tabu.caminhoPrint();
+        node.tabu.caminhoPrint(node.altura);
         return;
       }
       else{
@@ -76,7 +76,7 @@ class Gulosa {
       if (node.tabu.equals(target)) {
         System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura);
         System.out.println("Numero de nos visitados: "+nosVisitados+" \nNumero de nos gerados: "+nosGerados);
-        node.tabu.caminhoPrint();
+        node.tabu.caminhoPrint(node.altura);
         return;
       }
       else{
@@ -119,7 +119,7 @@ class Dfs {
       if (node.tabu.equals(target)) {
         System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura);
         System.out.println("Numero de nos visitados: "+nosVisitados+" \nNumero de nos gerados: "+nosGerados);
-        node.tabu.caminhoPrint();
+        node.tabu.caminhoPrint(node.altura);
         return;
       }
       else{
@@ -160,14 +160,14 @@ class IDfs {
     this.inicial = inicial;
     this.target = target;
     this.max = max;
-    nosGerados = 0;
-    nosVisitados = 0;
+    //nosGerados = 0;
+    //nosVisitados = 0;
   }
   public void generalSearchAlgorithm(){
     for (int i = 1;i<max ;++i ) {
       Integer resul = generalSearchAlgorithm(i);
       if(resul != null){
-        System.out.println("Numero minimo de jogadas encontradas:"+" "+resul);
+        //System.out.println("Numero minimo de jogadas encontradas:"+" "+resul);
         break;
       }
     }
@@ -180,12 +180,15 @@ class IDfs {
       ++nosVisitados;
       //System.out.println(node.tabu);
       if (node.tabu.equals(target)) {
-        //System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura);
+        System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura);
+        System.out.println("Numero de nos visitados: "+nosVisitados+" \nNumero de nos gerados: "+nosGerados);
+        node.tabu.caminhoPrint(node.altura);
         return node.altura;
       }
       else{
           if(node.altura<x)
             for(Tabuleiro tabu: node.tabu.makeDescendents(mapa)){
+              ++nosGerados;
               queue.add(new Node(tabu, node.altura+1,1,target));
             }
           /*}
@@ -227,7 +230,7 @@ class Bfs {
       if (node.tabu.equals(target)) {
         System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura);
         System.out.println("Numero de nos visitados: "+nosVisitados+" \nNumero de nos gerados: "+nosGerados);
-        printConf(mapa,node.tabu);
+        printConf(mapa,node.tabu,node.altura);
         return;
       }
       else{
@@ -236,7 +239,7 @@ class Bfs {
               Node aux = new Node(tabu, node.altura+1,1,target);
               ++nosGerados;
               aux.tabu.pai = null;
-              mapa.put(aux.tabu,tabu.zero);
+              mapa.put(aux.tabu,node.tabu.zero);
               queue.add(aux);
             }
           /*}
@@ -248,15 +251,17 @@ class Bfs {
     System.err.println("Erro: Solucao nao encontrada!!!");
   }
 
-  private void printConf(HashMap mapa,Tabuleiro target){
-    System.out.println(target);
+  private void printConf(HashMap mapa,Tabuleiro target,int altura){
     System.out.println();
+    System.out.println("Nó de profundiade: "+altura);
+    --altura;
+    System.out.println(target);
     Ponto aux = (Ponto)mapa.get(target);
     while(aux != null){
-      target.posic[target.zero.getX()][target.zero.getY()]= new Integer(target.posic[aux.getX()][aux.getY()]);
-      target.posic[aux.getX()][aux.getY()]=0;
+      System.out.println("Nó de profundiade: "+altura);
+      --altura;
+      target = new Tabuleiro(target,aux);
       System.out.println(target);
-      System.out.println();
       aux = (Ponto)mapa.get(target);
     }
   }

@@ -39,9 +39,11 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
     }
   }
 
-  public void caminhoPrint(){
+  public void caminhoPrint(int altura){
     Tabuleiro tabu = this;
     while(tabu != null){
+      System.out.println("Nó de profundiade: "+altura);
+      --altura;
       System.out.println(tabu);
       tabu = tabu.pai;
     }
@@ -49,6 +51,8 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
 
   //--------Verificar se e possivel chegar a posicao final
   public Boolean isNotImpossible(Tabuleiro targetTab){  //retirar argumento
+    if(this.equals(targetTab))
+      return true;
     int[] inicial = new int[lado*lado];
     int[] target = new int[lado*lado];
 
@@ -85,12 +89,29 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
       }
     }
 
-      // ( (grid width odd) && (#inversions even) )  ||  ( (grid width even) && ((blank on odd row from bottom) == (#inversions even)) )
-      // odd -> impar
-      // even -> par
-      //logo (blank on odd row from bottom) == (#inversions even))
-      //return true;
-      return((number2 % 2) == ((4-zero.getY())%2)) && ((number1 % 2) == ((4-zero.getY())%2));
+      boolean tabu1B;
+      if ((4-zero.getY())%2 == 0 && number1%2 ==1)
+        tabu1B = true;
+      else
+        if((4-zero.getY())%2 == 1 && number1%2 ==0)
+          tabu1B = true;
+        else
+          tabu1B = false;
+
+      boolean tabu2B;
+      if ((4-targetTab.zero.getY())%2 == 0 && number2%2 ==1)
+        tabu2B = true;
+      else
+        if((4-targetTab.zero.getY())%2 == 1 && number2%2 ==0)
+          tabu2B = true;
+        else
+            tabu2B = false;
+
+
+      //System.out.println(tabu1B+" "+tabu2B);
+      return tabu2B != tabu1B ;
+
+
   }
   public LinkedList<Tabuleiro> makeDescendents(HashSet registo){
     LinkedList<Tabuleiro> descendentes = new LinkedList<Tabuleiro>();
