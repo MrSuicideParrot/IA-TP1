@@ -1,7 +1,7 @@
 class Node implements Comparable<Node>{
   int altura;
   public Tabuleiro tabu;
-  private Integer heuristica = null;
+  public Integer heuristica = null;
 
   public Node(Tabuleiro tabu, int altura, int heur,Tabuleiro target){
     this.altura = altura;
@@ -26,5 +26,15 @@ class Node implements Comparable<Node>{
       return -1;
     else
       return 1;
+  }
+}
+
+class Info{
+  public Ponto zero;
+  public Integer heuristica;
+
+  Info(Ponto zero, Integer heuristica){
+    this.zero = zero;
+    this.heuristica = heuristica;
   }
 }

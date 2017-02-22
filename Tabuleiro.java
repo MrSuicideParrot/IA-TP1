@@ -1,5 +1,6 @@
 import java.util.Queue;
 import java.util.Map;
+import java.util.HashSet;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Arrays;
@@ -7,11 +8,13 @@ import java.util.Arrays;
 class Tabuleiro{ // implements Comparable<Tabuleiro>{
   private final static int lado = 4;
 
-  private Integer[][] posic;
-  private Ponto zero;
+  public Integer[][] posic;
+  public Ponto zero;
+  public Tabuleiro pai;
 
   public Tabuleiro(Tabuleiro p2, Ponto target){
     this.posic = new Integer[lado][lado];
+    pai = p2;
     Tabuleiro p1 = this;
     MatrixCopy(p1.posic,p2.posic);
     //p1.posic = newInteger(p2.posic);
@@ -21,6 +24,7 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
   }
 
   public Tabuleiro(Integer[][] posic){
+    pai = null;
     this.posic = new Integer[lado][lado];
     MatrixCopy(this.posic,posic);
     this.zero = findZero();
@@ -32,6 +36,14 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
       for (int j = 0;j <lado ;++j ) {
         dest[i][j] = new Integer(source[i][j]);
       }
+    }
+  }
+
+  public void caminhoPrint(){
+    Tabuleiro tabu = this;
+    while(tabu != null){
+      System.out.println(tabu);
+      tabu = tabu.pai;
     }
   }
 
@@ -80,19 +92,38 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
       //return true;
       return((number2 % 2) == ((4-zero.getY())%2)) && ((number1 % 2) == ((4-zero.getY())%2));
   }
-  public LinkedList<Tabuleiro> makeDescendents(Map registo){
+  public LinkedList<Tabuleiro> makeDescendents(HashSet registo){
     LinkedList<Tabuleiro> descendentes = new LinkedList<Tabuleiro>();
     int[] moveX ={0, 1, 0, -1};
     int[] moveY ={-1, 0, 1, 0};
     for(int i = 0; i < lado; ++i){
       Ponto ponto = new Ponto(zero.getX()+moveX[i],zero.getY()+moveY[i]);
-      if(!ponto.isValid()){
-        // ver se elimina o ponto
+      if(!ponto.isValid())
         continue;
-      }
       Tabuleiro tabu = new Tabuleiro(this, ponto);
+      if(pai!=null && tabu.equals(pai)) //evita que sejam calculados nos pais
+        continue;
       if(registo != null){
-        //System.out.println(tabu);
+        if(registo.contains(tabu))
+          continue;
+      }
+      descendentes.addFirst(tabu);
+    }
+    return descendentes;
+  }
+
+  public LinkedList<Tabuleiro> makeDescendentsM(HashMap registo){
+    LinkedList<Tabuleiro> descendentes = new LinkedList<Tabuleiro>();
+    int[] moveX ={0, 1, 0, -1};
+    int[] moveY ={-1, 0, 1, 0};
+    for(int i = 0; i < lado; ++i){
+      Ponto ponto = new Ponto(zero.getX()+moveX[i],zero.getY()+moveY[i]);
+      if(!ponto.isValid())
+        continue;
+      Tabuleiro tabu = new Tabuleiro(this, ponto);
+      if(pai!=null && tabu.equals(pai)) //evita que sejam calculados nos pais
+        continue;
+      if(registo != null){
         if(registo.containsKey(tabu))
           continue;
       }
@@ -171,12 +202,13 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
     }
     @Override
     public int hashCode(){
-		return this.toString().hashCode();
+      return this.toString().hashCode();
 	}
 
-
-    public boolean equals(Tabuleiro p2 ){
-     Tabuleiro p1 = this;
+  @Override
+    public boolean equals(Object no){
+      Tabuleiro p2 = (Tabuleiro) no;
+      Tabuleiro p1 = this;
      for (int i=0;i<lado;++i)
       for (int j=0;j<lado;++j)
         if(!p1.posic[i][j].equals(p2.posic[i][j]))

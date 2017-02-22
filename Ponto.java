@@ -24,4 +24,8 @@ public class Ponto {
 		x = x0;
 		y = y0;
 	}
+	/*public boolean equals(Ponto p2){
+		Ponto p1 = this;
+		return(p1.x.equals(p2.x)&&p1.y.equals(p2.y));
+	}*/
 }

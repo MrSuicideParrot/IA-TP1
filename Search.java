@@ -1,4 +1,5 @@
 import java.util.Map;
+import java.util.HashSet;
 import java.util.HashMap;
 import java.util.Queue;
 import java.util.LinkedList;
@@ -9,7 +10,7 @@ class Astar {
   public PriorityQueue<Node> queue; //= new PriorityQueue<Node>();
   private Tabuleiro inicial;
   private Tabuleiro target;
-  public HashMap mapa = null;
+  public HashSet<Tabuleiro> mapa = null;
 
   //contadores
   private int nosGerados;
@@ -31,17 +32,17 @@ class Astar {
       //System.out.println(node.tabu);
       if (node.tabu.equals(target)) {
         System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura);
+        System.out.println("Numero de nos visitados: "+nosVisitados+" \nNumero de nos gerados: "+nosGerados);
+        node.tabu.caminhoPrint();
         return;
       }
       else{
-        //if(procura.max != node.altura){
-          for(Tabuleiro tabu: node.tabu.makeDescendents(mapa)){
-          //  System.out.println(tabu);
-            queue.add(new Node(tabu, node.altura+1,0,target));
+          for(Tabuleiro tabu: node.tabu.makeDescendents(null)){
+            ++nosGerados;
+            Node aux = new Node(tabu, node.altura+1,0,target);
+            queue.add(aux);
           }
-          //return;
-        //}
-      }
+        }
 
     }
     System.err.println("Erro: Solucao nao encontrada!!!");
@@ -52,7 +53,7 @@ class Gulosa {
   public PriorityQueue<Node> queue; //= new PriorityQueue<Node>();
   private Tabuleiro inicial;
   private Tabuleiro target;
-  public HashMap mapa = null;
+  public HashSet mapa = null;
 
   //contadores
   private int nosGerados;
@@ -74,18 +75,16 @@ class Gulosa {
       //System.out.println(node.tabu);
       if (node.tabu.equals(target)) {
         System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura);
+        System.out.println("Numero de nos visitados: "+nosVisitados+" \nNumero de nos gerados: "+nosGerados);
+        node.tabu.caminhoPrint();
         return;
       }
       else{
-        //if(procura.max != node.altura){
           for(Tabuleiro tabu: node.tabu.makeDescendents(mapa)){
-          //  System.out.println(tabu);
+            ++nosGerados;
             queue.add(new Node(tabu, node.altura+1,1,target));
           }
-          //return;
-        //}
-      }
-
+        }
     }
     System.err.println("Erro: Solucao nao encontrada!!!");
   }
@@ -95,7 +94,7 @@ class Dfs {
   public LinkedList<Node> queue; //= new PriorityQueue<Node>();
   private Tabuleiro inicial;
   private Tabuleiro target;
-  public HashMap<Tabuleiro,Ponto> mapa = null;
+  public HashSet<Tabuleiro> mapa = null;
 
   //contadores
   private int nosGerados;
@@ -103,7 +102,7 @@ class Dfs {
 
   public Dfs(Tabuleiro inicial,Tabuleiro target){
     queue = new LinkedList<Node>();
-    mapa = new HashMap<Tabuleiro,Ponto>();
+    mapa = new HashSet<Tabuleiro>();
     this.inicial = inicial;
     this.target = target;
     nosGerados = 0;
@@ -112,13 +111,15 @@ class Dfs {
 
   public void generalSearchAlgorithm(){
     queue.add(new Node(inicial,0,1,target));
-    mapa.put(inicial,null);
     while (!queue.isEmpty()) {
       Node node = queue.poll();
       ++nosVisitados;
+      mapa.add(node.tabu);
       //System.out.println(node.tabu);
       if (node.tabu.equals(target)) {
         System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura);
+        System.out.println("Numero de nos visitados: "+nosVisitados+" \nNumero de nos gerados: "+nosGerados);
+        node.tabu.caminhoPrint();
         return;
       }
       else{
@@ -126,10 +127,13 @@ class Dfs {
             boolean flag = false;
             for(Tabuleiro tabu: node.tabu.makeDescendents(mapa)){
               flag = true;
+              ++nosGerados;
               queue.add(new Node(tabu, node.altura+1,1,target));
             }
-            if(!flag)
+            if(!flag){
+              node.tabu.pai = null;
               mapa.remove(node.tabu);
+            }
           /*}
           catch(NullPointerException e){
             mapa.remove(node.tabu);
@@ -144,7 +148,7 @@ class IDfs {
   public LinkedList<Node> queue; //= new PriorityQueue<Node>();
   private Tabuleiro inicial;
   private Tabuleiro target;
-  public HashMap<Tabuleiro,Ponto> mapa = null;
+  public HashSet<Tabuleiro> mapa = null;
   private int max;
 
   //contadores
@@ -206,7 +210,7 @@ class Bfs {
 
   public Bfs(Tabuleiro inicial,Tabuleiro target){
     queue = new LinkedList<Node>();
-    //mapa = new HashMap<Tabuleiro,Ponto>();
+    mapa = new HashMap<Tabuleiro,Ponto>();
     this.inicial = inicial;
     this.target = target;
     nosGerados = 0;
@@ -215,19 +219,25 @@ class Bfs {
 
   public void generalSearchAlgorithm(){
     queue.add(new Node(inicial,0,1,target));
-    //mapa.put(inicial,null);
+    mapa.put(inicial,null);
     while (!queue.isEmpty()) {
       Node node = queue.poll();
       ++nosVisitados;
       //System.out.println(node.tabu);
       if (node.tabu.equals(target)) {
         System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura);
+        System.out.println("Numero de nos visitados: "+nosVisitados+" \nNumero de nos gerados: "+nosGerados);
+        printConf(mapa,node.tabu);
         return;
       }
       else{
           //try {
-            for(Tabuleiro tabu: node.tabu.makeDescendents(mapa)){
-              queue.add(new Node(tabu, node.altura+1,1,target));
+            for(Tabuleiro tabu: node.tabu.makeDescendentsM(mapa)){
+              Node aux = new Node(tabu, node.altura+1,1,target);
+              ++nosGerados;
+              aux.tabu.pai = null;
+              mapa.put(aux.tabu,tabu.zero);
+              queue.add(aux);
             }
           /*}
           catch(NullPointerException e){
@@ -236,5 +246,18 @@ class Bfs {
       }
     }
     System.err.println("Erro: Solucao nao encontrada!!!");
+  }
+
+  private void printConf(HashMap mapa,Tabuleiro target){
+    System.out.println(target);
+    System.out.println();
+    Ponto aux = (Ponto)mapa.get(target);
+    while(aux != null){
+      target.posic[target.zero.getX()][target.zero.getY()]= new Integer(target.posic[aux.getX()][aux.getY()]);
+      target.posic[aux.getX()][aux.getY()]=0;
+      System.out.println(target);
+      System.out.println();
+      aux = (Ponto)mapa.get(target);
+    }
   }
 }
