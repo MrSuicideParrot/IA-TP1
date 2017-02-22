@@ -14,22 +14,27 @@ class Jogo15{
       //Imprimir o help
       return;
     }
+    scannerTabuleiro();
+    if(!inicial.isNotImpossible(target)){
+      System.out.println("Tabuleiro sem solução!");
+      return;
+    }
     long startTime = System.currentTimeMillis();
     switch (args[0].toUpperCase()) {
       case "ASTAR":
-        scannerTabuleiro();
+        //scannerTabuleiro();
         Astar search1 = new Astar(inicial,target,startTime);
         search1.generalSearchAlgorithm();
         break;
 
       case "GULOSO":
-        scannerTabuleiro();
+        //scannerTabuleiro();
         Gulosa search2 = new Gulosa(inicial,target,startTime);
         search2.generalSearchAlgorithm();
         break;
 
       case "DFS":
-        scannerTabuleiro();
+        //scannerTabuleiro();
         Dfs search3 = new Dfs(inicial,target,startTime);
         search3.generalSearchAlgorithm();
         break;
@@ -39,13 +44,13 @@ class Jogo15{
             System.err.println("Erro: Profundiade do IDFS não inserida!");
             System.exit(1);
         }
-        scannerTabuleiro();
+        //scannerTabuleiro();
         IDfs search5 = new IDfs(inicial,target,Integer.parseInt(args[1]),startTime);
         search5.generalSearchAlgorithm();
         break;
 
       case "BFS":
-        scannerTabuleiro();
+        //scannerTabuleiro();
         Bfs search4 = new Bfs(inicial,target,startTime);
         search4.generalSearchAlgorithm();
         break;

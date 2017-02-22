@@ -57,62 +57,29 @@ class Tabuleiro{ // implements Comparable<Tabuleiro>{
     int[] target = new int[lado*lado];
 
     //organizacao em vetor
-    int number1 = 0;
+    int number1=0,number2 = 0;
     for (int i =0 ; i < lado; ++i)
       for(int j= 0; j < lado;++j){
           inicial[number1] = this.posic[i][j];
-          ++number1;
-      }
-
-    number1 = 0;
-    for (int i =0 ; i < lado; ++i)
-      for(int j= 0; j < lado;++j){
           target[number1] = targetTab.posic[i][j];
           ++number1;
       }
 
-
     //calculo da paridade da matriz
     number1 = 0;
-    for (int i = 0;i < lado*lado ;++i ) {
-      for (int j = i; j < lado*lado;++j){
-          if(inicial[i]>inicial[j])
+    for (int i = 0;i < lado*lado ;i++ ) {
+      for (int j = i+1; j < lado*lado;j++){
+          if(inicial[j]!=0&&inicial[i]>inicial[j]){
             number1+=1;
-      }
-    }
-
-    int number2 = 0;
-    for (int i = 0;i < lado*lado ;++i ) {
-      for (int j = i; j < lado*lado;++j){
-          if(target[i]>target[j])
+          if(target[j]!=0 && target[i]>target[j])
             number2+=1;
+          }
       }
     }
 
-      boolean tabu1B;
-      if ((4-zero.getY())%2 == 0 && number1%2 ==1)
-        tabu1B = true;
-      else
-        if((4-zero.getY())%2 == 1 && number1%2 ==0)
-          tabu1B = true;
-        else
-          tabu1B = false;
+  return ((((4-targetTab.zero.getY())%2 == 1)&&(number2%2 ==0))== ((4-zero.getY())%2 == 1 && (number1%2 ==0)));
+}
 
-      boolean tabu2B;
-      if ((4-targetTab.zero.getY())%2 == 0 && number2%2 ==1)
-        tabu2B = true;
-      else
-        if((4-targetTab.zero.getY())%2 == 1 && number2%2 ==0)
-          tabu2B = true;
-        else
-            tabu2B = false;
-
-
-      //System.out.println(tabu1B+" "+tabu2B);
-      return tabu2B != tabu1B ;
-
-
-  }
   public LinkedList<Tabuleiro> makeDescendents(HashSet registo){
     LinkedList<Tabuleiro> descendentes = new LinkedList<Tabuleiro>();
     int[] moveX ={0, 1, 0, -1};
