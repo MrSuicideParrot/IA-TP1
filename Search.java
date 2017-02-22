@@ -11,19 +11,17 @@ class Astar {
   private Tabuleiro inicial;
   private Tabuleiro target;
   public HashSet<Tabuleiro> mapa = null;
-  private long startTime;
 
   //contadores
   private int nosGerados;
   private int nosVisitados;
 
-  public Astar(Tabuleiro inicial,Tabuleiro target,long time){
+  public Astar(Tabuleiro inicial,Tabuleiro target){
     queue = new PriorityQueue<Node>();
     this.inicial = inicial;
     this.target = target;
     nosGerados = 0;
     nosVisitados = 0;
-    startTime = time;
   }
 
   public void generalSearchAlgorithm(){
@@ -33,7 +31,7 @@ class Astar {
       ++nosVisitados;
       //System.out.println(node.tabu);
       if (node.tabu.equals(target)) {
-        System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura+" "+(double)(System.currentTimeMillis() - startTime) / 1000.0 + " segundos.");
+        System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura);
         System.out.println("Numero de nos visitados: "+nosVisitados+" \nNumero de nos gerados: "+nosGerados);
         node.tabu.caminhoPrint(node.altura);
         return;
@@ -56,19 +54,17 @@ class Gulosa {
   private Tabuleiro inicial;
   private Tabuleiro target;
   public HashSet mapa = null;
-  private long startTime;
 
   //contadores
   private int nosGerados;
   private int nosVisitados;
 
-  public Gulosa(Tabuleiro inicial,Tabuleiro target,long time){
+  public Gulosa(Tabuleiro inicial,Tabuleiro target){
     queue = new PriorityQueue<Node>();
     this.inicial = inicial;
     this.target = target;
     nosGerados = 0;
     nosVisitados = 0;
-    startTime = time;
   }
 
   public void generalSearchAlgorithm(){
@@ -78,7 +74,7 @@ class Gulosa {
       ++nosVisitados;
       //System.out.println(node.tabu);
       if (node.tabu.equals(target)) {
-        System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura+" "+(double)(System.currentTimeMillis() - startTime) / 1000.0 + " segundos.");
+        System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura);
         System.out.println("Numero de nos visitados: "+nosVisitados+" \nNumero de nos gerados: "+nosGerados);
         node.tabu.caminhoPrint(node.altura);
         return;
@@ -99,20 +95,18 @@ class Dfs {
   private Tabuleiro inicial;
   private Tabuleiro target;
   public HashSet<Tabuleiro> mapa = null;
-  private long startTime;
 
   //contadores
   private int nosGerados;
   private int nosVisitados;
 
-  public Dfs(Tabuleiro inicial,Tabuleiro target,long time){
+  public Dfs(Tabuleiro inicial,Tabuleiro target){
     queue = new LinkedList<Node>();
     mapa = new HashSet<Tabuleiro>();
     this.inicial = inicial;
     this.target = target;
     nosGerados = 0;
     nosVisitados = 0;
-    startTime = time;
   }
 
   public void generalSearchAlgorithm(){
@@ -123,7 +117,7 @@ class Dfs {
       mapa.add(node.tabu);
       //System.out.println(node.tabu);
       if (node.tabu.equals(target)) {
-        System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura+" "+(double)(System.currentTimeMillis() - startTime) / 1000.0 + " segundos.");
+        System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura);
         System.out.println("Numero de nos visitados: "+nosVisitados+" \nNumero de nos gerados: "+nosGerados);
         node.tabu.caminhoPrint(node.altura);
         return;
@@ -156,18 +150,16 @@ class IDfs {
   private Tabuleiro target;
   public HashSet<Tabuleiro> mapa = null;
   private int max;
-  private long startTime;
 
   //contadores
   private int nosGerados;
   private int nosVisitados;
 
-  public IDfs(Tabuleiro inicial,Tabuleiro target, int max, long time){
+  public IDfs(Tabuleiro inicial,Tabuleiro target, int max){
     queue = new LinkedList<Node>();
     this.inicial = inicial;
     this.target = target;
     this.max = max;
-    startTime = time;
     //nosGerados = 0;
     //nosVisitados = 0;
   }
@@ -188,7 +180,7 @@ class IDfs {
       ++nosVisitados;
       //System.out.println(node.tabu);
       if (node.tabu.equals(target)) {
-        System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura+" "+(double)(System.currentTimeMillis() - startTime) / 1000.0 + " segundos.");
+        System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura);
         System.out.println("Numero de nos visitados: "+nosVisitados+" \nNumero de nos gerados: "+nosGerados);
         node.tabu.caminhoPrint(node.altura);
         return node.altura;
@@ -214,20 +206,18 @@ class Bfs {
   private Tabuleiro inicial;
   private Tabuleiro target;
   public HashMap<Tabuleiro,Ponto> mapa = null;
-  private long startTime;
 
   //contadores
   private int nosGerados;
   private int nosVisitados;
 
-  public Bfs(Tabuleiro inicial,Tabuleiro target, long time){
+  public Bfs(Tabuleiro inicial,Tabuleiro target){
     queue = new LinkedList<Node>();
     mapa = new HashMap<Tabuleiro,Ponto>();
     this.inicial = inicial;
     this.target = target;
     nosGerados = 0;
     nosVisitados = 0;
-    startTime = time;
   }
 
   public void generalSearchAlgorithm(){
@@ -238,7 +228,7 @@ class Bfs {
       ++nosVisitados;
       //System.out.println(node.tabu);
       if (node.tabu.equals(target)) {
-        System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura+" "+(double)(System.currentTimeMillis() - startTime) / 1000.0 + " segundos.");
+        System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura);
         System.out.println("Numero de nos visitados: "+nosVisitados+" \nNumero de nos gerados: "+nosGerados);
         printConf(mapa,node.tabu,node.altura);
         return;
