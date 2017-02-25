@@ -1,6 +1,5 @@
 import java.util.Scanner;
 
-
 class Jogo15{
   private final static int lado = 4;
   public static Tabuleiro inicial = null;

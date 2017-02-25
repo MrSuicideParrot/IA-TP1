@@ -117,7 +117,7 @@ class Dfs {
   }
 
   public void generalSearchAlgorithm(){
-    queue.add(new Node(inicial,0,1,target));
+    queue.add(new Node(inicial,0,3,target));
     while (!queue.isEmpty()) {
       Node node = queue.poll();
       ++nosVisitados;
@@ -135,7 +135,7 @@ class Dfs {
             for(Tabuleiro tabu: node.tabu.makeDescendents(mapa)){
               flag = true;
               ++nosGerados;
-              queue.add(new Node(tabu, node.altura+1,1,target));
+              queue.add(new Node(tabu, node.altura+1,3,target));
             }
             if(!flag){
               node.tabu.pai = null;
@@ -183,7 +183,7 @@ class IDfs {
   }
 
   private Integer generalSearchAlgorithm(int x){
-    queue.add(new Node(inicial,0,1,target));
+    queue.add(new Node(inicial,0,3,target));
     while (!queue.isEmpty()) {
       Node node = queue.poll();
       ++nosVisitados;
@@ -198,7 +198,7 @@ class IDfs {
           if(node.altura<x)
             for(Tabuleiro tabu: node.tabu.makeDescendents(mapa)){
               ++nosGerados;
-              queue.add(new Node(tabu, node.altura+1,1,target));
+              queue.add(new Node(tabu, node.altura+1,3,target));
             }
           /*}
           catch(NullPointerException e){
@@ -232,7 +232,7 @@ class Bfs {
   }
 
   public void generalSearchAlgorithm(){
-    queue.add(new Node(inicial,0,1,target));
+    queue.add(new Node(inicial,0,3,target));
     mapa.put(inicial,null);
     while (!queue.isEmpty()) {
       Node node = queue.poll();
@@ -247,7 +247,7 @@ class Bfs {
       else{
           //try {
             for(Tabuleiro tabu: node.tabu.makeDescendentsM(mapa)){
-              Node aux = new Node(tabu, node.altura+1,1,target);
+              Node aux = new Node(tabu, node.altura+1,3,target);
               ++nosGerados;
               aux.tabu.pai = null;
               mapa.put(aux.tabu,node.tabu.zero);
