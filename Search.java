@@ -245,7 +245,6 @@ class Bfs {
         return;
       }
       else{
-          //try {
             for(Tabuleiro tabu: node.tabu.makeDescendentsM(mapa)){
               Node aux = new Node(tabu, node.altura+1,3,target);
               ++nosGerados;
@@ -253,10 +252,6 @@ class Bfs {
               mapa.put(aux.tabu,node.tabu.zero);
               queue.add(aux);
             }
-          /*}
-          catch(NullPointerException e){
-            mapa.remove(node.tabu);
-          }*/
       }
     }
     System.err.println("Erro: Solucao nao encontrada!!!");
