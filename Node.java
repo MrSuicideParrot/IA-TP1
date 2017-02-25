@@ -3,18 +3,24 @@ class Node implements Comparable<Node>{
   public Tabuleiro tabu;
   public Integer heuristica = null;
 
+  /*
+  // tabu -> Tabuleiro a associar ao nó
+  // altura -> altura do nó
+  // heur -> tipo de heuristica: 0 altura + manhattan distance e 1 manhattan distance outros nao sao calculados
+  // target -> tabuleiro ao qual queremos chegar
+  */
   public Node(Tabuleiro tabu, int altura, int heur,Tabuleiro target){
     this.altura = altura;
     this.tabu = tabu;
     switch (heur){
       case 0: //A star
         heuristica = altura + tabu.distToEnd(target);
-        //System.out.println(heuristica);
-        //System.exit(0);
         break;
+
       case 1: //gulosa
         heuristica = tabu.distToEnd(target);
         break;
+
       default:
         break;
     }
@@ -26,15 +32,5 @@ class Node implements Comparable<Node>{
       return -1;
     else
       return 1;
-  }
-}
-
-class Info{
-  public Ponto zero;
-  public Integer heuristica;
-
-  Info(Ponto zero, Integer heuristica){
-    this.zero = zero;
-    this.heuristica = heuristica;
   }
 }
