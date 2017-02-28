@@ -25,7 +25,7 @@ class Jogo15{
         search1.generalSearchAlgorithm();
         break;
 
-      case "GULOSO":
+      case "GULOSA":
         Gulosa search2 = new Gulosa(inicial,target,startTime);
         search2.generalSearchAlgorithm();
         break;
