@@ -198,7 +198,7 @@ class IDfs {
           if(node.altura<x)
             for(Tabuleiro tabu: node.tabu.makeDescendents(mapa)){
               ++nosGerados;
-              queue.add(new Node(tabu, node.altura+1,3,target));
+              queue.addFirst(new Node(tabu, node.altura+1,3,target));
             }
           /*}
           catch(NullPointerException e){
