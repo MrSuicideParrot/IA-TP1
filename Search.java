@@ -34,7 +34,7 @@ class Astar {
       ++nosVisitados;
       //System.out.println(node.tabu);
       if (node.tabu.equals(target)) {
-        System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura+" "+(double)(System.currentTimeMillis() - startTime) / 1000.0 + " segundos.");
+        System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura+" em "+(double)(System.currentTimeMillis() - startTime) / 1000.0 + " segundos.");
         System.out.println("Numero de nos visitados: "+nosVisitados+" \nNumero de nos gerados: "+nosGerados);
         node.tabu.caminhoPrint(node.altura);
         return;
@@ -79,7 +79,7 @@ class Gulosa {
       ++nosVisitados;
       //System.out.println(node.tabu);
       if (node.tabu.equals(target)) {
-        System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura+" "+(double)(System.currentTimeMillis() - startTime) / 1000.0 + " segundos.");
+        System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura+" em "+(double)(System.currentTimeMillis() - startTime) / 1000.0 + " segundos.");
         System.out.println("Numero de nos visitados: "+nosVisitados+" \nNumero de nos gerados: "+nosGerados);
         node.tabu.caminhoPrint(node.altura);
         return;
@@ -124,7 +124,7 @@ class Dfs {
       mapa.add(node.tabu);
       //System.out.println(node.tabu);
       if (node.tabu.equals(target)) {
-        System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura+" "+(double)(System.currentTimeMillis() - startTime) / 1000.0 + " segundos.");
+        System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura+" em "+(double)(System.currentTimeMillis() - startTime) / 1000.0 + " segundos.");
         System.out.println("Numero de nos visitados: "+nosVisitados+" \nNumero de nos gerados: "+nosGerados);
         node.tabu.caminhoPrint(node.altura);
         return;
@@ -189,7 +189,7 @@ class IDfs {
       ++nosVisitados;
       //System.out.println(node.tabu);
       if (node.tabu.equals(target)) {
-        System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura+" "+(double)(System.currentTimeMillis() - startTime) / 1000.0 + " segundos.");
+        System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura+" em "+(double)(System.currentTimeMillis() - startTime) / 1000.0 + " segundos.");
         System.out.println("Numero de nos visitados: "+nosVisitados+" \nNumero de nos gerados: "+nosGerados);
         node.tabu.caminhoPrint(node.altura);
         return node.altura;
@@ -239,7 +239,7 @@ class Bfs {
       ++nosVisitados;
       //System.out.println(node.tabu);
       if (node.tabu.equals(target)) {
-        System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura+" "+(double)(System.currentTimeMillis() - startTime) / 1000.0 + " segundos.");
+        System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura+" em "+(double)(System.currentTimeMillis() - startTime) / 1000.0 + " segundos.");
         System.out.println("Numero de nos visitados: "+nosVisitados+" \nNumero de nos gerados: "+nosGerados);
         printConf(mapa,node.tabu,node.altura);
         return;

@@ -87,8 +87,7 @@ class Tabuleiro{
           }
       }
     }
-
-  return ((((4-targetTab.zero.getY())%2 == 1)&&(number2%2 ==0)) == ((4-zero.getY())%2 == 1 && (number1%2 ==0)));
+    return ((((4-targetTab.zero.getY())%2 == 1)==(number2%2 ==0)) == ((4-zero.getY())%2 == 1 == (number1%2 ==0)));
 }
 
 /*
