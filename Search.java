@@ -1,7 +1,6 @@
 
 import java.util.Map;
 import java.util.HashSet;
-import java.util.HashMap;
 import java.util.Queue;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
@@ -11,7 +10,6 @@ class Astar {
   public PriorityQueue<Node> queue; //= new PriorityQueue<Node>();
   private Tabuleiro inicial;
   private Tabuleiro target;
-  public HashSet<Tabuleiro> mapa = null;
   private long startTime;
 
   //contadores
@@ -56,7 +54,6 @@ class Gulosa {
   public PriorityQueue<Node> queue; //= new PriorityQueue<Node>();
   private Tabuleiro inicial;
   private Tabuleiro target;
-  public HashSet mapa = null;
   private long startTime;
 
   //contadores
@@ -85,7 +82,7 @@ class Gulosa {
         return;
       }
       else{
-          for(Tabuleiro tabu: node.tabu.makeDescendents(mapa)){
+          for(Tabuleiro tabu: node.tabu.makeDescendents(null)){
             ++nosGerados;
             queue.add(new Node(tabu, node.altura+1,1,target));
           }
@@ -187,7 +184,6 @@ class IDfs {
     while (!queue.isEmpty()) {
       Node node = queue.poll();
       ++nosVisitados;
-      //System.out.println(node.tabu);
       if (node.tabu.equals(target)) {
         System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura+" em "+(double)(System.currentTimeMillis() - startTime) / 1000.0 + " segundos.");
         System.out.println("Numero de nos visitados: "+nosVisitados+" \nNumero de nos gerados: "+nosGerados);
@@ -200,10 +196,6 @@ class IDfs {
               ++nosGerados;
               queue.addFirst(new Node(tabu, node.altura+1,3,target));
             }
-          /*}
-          catch(NullPointerException e){
-            mapa.remove(node.tabu);
-          }*/
       }
     }
     return null;
@@ -214,7 +206,6 @@ class Bfs {
   public Queue<Node> queue; //= new PriorityQueue<Node>();
   private Tabuleiro inicial;
   private Tabuleiro target;
-  public HashMap<Tabuleiro,Ponto> mapa = null;
   private long startTime;
 
   //contadores
@@ -223,7 +214,6 @@ class Bfs {
 
   public Bfs(Tabuleiro inicial,Tabuleiro target, long time){
     queue = new LinkedList<Node>();
-    mapa = new HashMap<Tabuleiro,Ponto>();
     this.inicial = inicial;
     this.target = target;
     nosGerados = 0;
@@ -233,7 +223,7 @@ class Bfs {
 
   public void generalSearchAlgorithm(){
     queue.add(new Node(inicial,0,3,target));
-    mapa.put(inicial,null);
+    //mapa.put(inicial,null);
     while (!queue.isEmpty()) {
       Node node = queue.poll();
       ++nosVisitados;
@@ -241,34 +231,17 @@ class Bfs {
       if (node.tabu.equals(target)) {
         System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura+" em "+(double)(System.currentTimeMillis() - startTime) / 1000.0 + " segundos.");
         System.out.println("Numero de nos visitados: "+nosVisitados+" \nNumero de nos gerados: "+nosGerados);
-        printConf(mapa,node.tabu,node.altura);
+        node.tabu.caminhoPrint(node.altura);
         return;
       }
       else{
-            for(Tabuleiro tabu: node.tabu.makeDescendentsM(mapa)){
+            for(Tabuleiro tabu: node.tabu.makeDescendents(null)){
               Node aux = new Node(tabu, node.altura+1,3,target);
               ++nosGerados;
-              aux.tabu.pai = null;
-              mapa.put(aux.tabu,node.tabu.zero);
               queue.add(aux);
             }
       }
     }
     System.err.println("Erro: Solucao nao encontrada!!!");
-  }
-
-  private void printConf(HashMap mapa,Tabuleiro target,int altura){
-    System.out.println();
-    System.out.println("Nó de profundiade: "+altura);
-    --altura;
-    System.out.println(target);
-    Ponto aux = (Ponto)mapa.get(target);
-    while(aux != null){
-      System.out.println("Nó de profundiade: "+altura);
-      --altura;
-      target = new Tabuleiro(target,aux);
-      System.out.println(target);
-      aux = (Ponto)mapa.get(target);
-    }
   }
 }

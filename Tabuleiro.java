@@ -116,31 +116,6 @@ class Tabuleiro{
     return descendentes; //retorna a lista de descendentes
   }
 
-  /*
-  //Funcao com o memso trabalho que a anterior no entanto encontra se preparada
-  //para utilizar HashMap
-  */
-  public LinkedList<Tabuleiro> makeDescendentsM(HashMap registo){
-    LinkedList<Tabuleiro> descendentes = new LinkedList<Tabuleiro>();
-    int[] moveX ={0, 1, 0, -1};
-    int[] moveY ={-1, 0, 1, 0};
-    for(int i = 0; i < lado; ++i){
-      Ponto ponto = new Ponto(zero.getX()+moveX[i],zero.getY()+moveY[i]);
-      if(!ponto.isValid())
-        continue;
-      Tabuleiro tabu = new Tabuleiro(this, ponto);
-      if(pai!=null && tabu.equals(pai)) //evita que sejam calculados nos pais
-        continue;
-      if(registo != null){
-        if(registo.containsKey(tabu))
-          continue;
-      }
-      descendentes.addFirst(tabu);
-    }
-    return descendentes;
-  }
-
-
   //-------------calculo da distancia de manhattan----------------------
   //Tabuleiro target -> posicao final a aqual queremos chegar
   public int distToEnd(Tabuleiro target){
