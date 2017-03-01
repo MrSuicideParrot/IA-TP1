@@ -156,6 +156,18 @@ class Tabuleiro{
     return -1;
   }
 
+  public boolean isValid(){
+    boolean[] vetor = new boolean[16];
+    Arrays.fill(vetor,false);
+    for (int i = 0;i < lado; ++i)
+      for (int j = 0;j < lado; ++j)
+        vetor[posic[i][j]] = true;
+    for (int i = 0;i < 16; ++i)
+      if(!vetor[i])
+        return false;
+    return true;
+  }
+
   //---------------------------------------------------------------------
 
   public String toString() {

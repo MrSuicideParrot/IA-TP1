@@ -10,7 +10,8 @@ class Jogo15{
     /Tratamento de argumentos
     /*/
     if(args.length == 0){
-      //Imprimir o help
+      System.out.println("Erro: nenhum argumento!");
+      printBanner();
       return;
     }
     scannerTabuleiro();
@@ -49,31 +50,50 @@ class Jogo15{
         search4.generalSearchAlgorithm();
         break;
 
+      case "HELP":
+        printBanner();
       default:
         System.err.println("Erro: Opção não reconhecida!");
+        printBanner();
         break;
     }
   }
-
+  private static void printBanner(){
+    System.out.println("Jogo15");
+    System.out.println("Uso: Jogo15 [Tipo de busca] [Opções de busca]");
+    System.out.println("Tipos de busca:");
+    System.out.println("  ASTAR -> efetua busca A estrela;\n  GULOSA -> efetua busca Gulosa;\n  BFS -> efetua busca em largura;\n  DFS -> efetua busca em profundiade;\n  IDFS [profundiade maxima] -> efetua busca em profundiade, onde profundiade maxima é o seu limite.");
+    System.out.println("Exemplo:\n  $Jogo15 IDFS 50");
+  }
   private static void scannerTabuleiro(){
     Scanner input = new Scanner(System.in);
     Integer[][] area = new Integer[lado][lado];
 
     //Leitura do tabuleiro inicial
+    System.out.println("Insira o tabuleiro inical:");
     for (int i=0; i<lado; ++i)
       for (int j=0; j<lado; ++j)
         area[i][j] = input.nextInt();
 
     //criacao de tabuleiro inicial
     inicial = new Tabuleiro(area);
+    if(!inicial.isValid()){
+      System.out.println("Erro: Tabuleiro inválido!");
+      System.exit(0);
+    }
 
     //Leitura do tabuleiro final
+    System.out.println("Insira o tabuleiro finnal:");
     for (int i=0; i<lado; ++i)
       for (int j=0; j<lado; ++j)
         area[i][j] = input.nextInt();
 
     //criacao de tabuleiro final
     target = new Tabuleiro(area);
+    if(!target.isValid()){
+      System.out.println("Erro: Tabuleiro inválido!");
+      System.exit(0);
+    }
 
   }
 }
