@@ -94,6 +94,6 @@ class Jogo15{
       System.out.println("Erro: Tabuleiro inválido!");
       System.exit(0);
     }
-
+    System.out.println("\n");
   }
 }
