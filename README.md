@@ -14,10 +14,11 @@ Jogo15 [Tipo de busca] [Opções de busca]
 * BFS -> efetua busca em largura;  
 * DFS -> efetua busca em profundiade;
 * IDFS [profundiade maxima] -> efetua busca em profundiade, onde profundiade maxima é o seu limite.
+
 ### Exemplo
 ```Shell
 $ Jogo15 IDFS 50
 ```
 ##### Trabalho realizado por:
 ###### [André Cirne](https://sigarra.up.pt/fcup/pt/fest_geral.cursos_list?pv_num_unico=201505860)
-###### [José Sousa](https://sigarra.up.pt/fcup/pt/fest_geral.cursos_list?pv_num_unico=201505860)
+###### [José Sousa](https://sigarra.up.pt/fcup/pt/fest_geral.cursos_list?pv_num_unico=201503443)
