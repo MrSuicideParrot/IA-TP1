@@ -61,6 +61,7 @@ class Tabuleiro{
   //Tabuleiro targetTab -> tabuleiro com posicao final
   */
   public Boolean isNotImpossible(Tabuleiro targetTab){  //retirar argumento
+    /* A classe onde esta função encontra se é o tabuleiro inicial e o argumentoque é passado na função é o final */
     if(this.equals(targetTab)) //se forem o mesmo tabuleiro retorna true
       return true;
 
@@ -87,7 +88,11 @@ class Tabuleiro{
           }
       }
     }
-    return ((((4-targetTab.zero.getY())%2 == 1)==(number2%2 ==0)) == ((4-zero.getY())%2 == 1 == (number1%2 ==0)));
+    //System.out.println(number1+" "+number2);
+    //System.out.println(((((4-targetTab.zero.getY())%2 == 1) ) == (number2%2 == 0))+" "+((4-targetTab.zero.getY())%2 == 1)+" "+(number2%2 == 0));
+    //System.out.println(((((4-zero.getY())%2 == 1) ) == (number1%2 == 0))+" "+((4-zero.getY())%2 == 1)+" "+(number1%2 == 0));
+    //System.out.println(4-zero.getY()+" "+zero.getY());
+    return ( ( ((4-targetTab.zero.getY())%2 == 1) ) == (number2%2 == 0) ) == ( ( ((4-zero.getY())%2 == 1) ) == (number1%2 == 0) );
 }
 
 /*
@@ -185,8 +190,10 @@ class Tabuleiro{
   private Ponto findZero(){
     for (int i=0;i<lado;++i)
       for (int j=0;j<lado;++j)
-        if(posic[i][j]==0)
-          return new Ponto(i,j);
+        if(posic[i][j]==0){
+          //System.out.println(i+" "+j);
+          return new Ponto(j,i);
+        }
 
     //caso nao seja encontrado nenhum zero para o programa
     System.err.println("Zero not found!");

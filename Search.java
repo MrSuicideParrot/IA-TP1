@@ -31,7 +31,6 @@ class Astar {
     while (!queue.isEmpty()) {
       Node node = queue.poll();
       ++nosVisitados;
-      System.out.println(node.tabu+" "+node.heuristica);
       if (node.tabu.equals(target)) {
         System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura+" em "+(double)(System.currentTimeMillis() - startTime) / 1000.0 + " segundos.");
         System.out.println("Numero de nos visitados: "+nosVisitados+" \nNumero de nos gerados: "+nosGerados);
@@ -76,7 +75,6 @@ class Gulosa {
     while (!queue.isEmpty()) {
       Node node = queue.poll();
       ++nosVisitados;
-      System.out.println(node.tabu+" "+node.heuristica);
       if (node.tabu.equals(target)) {
         System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura+" em "+(double)(System.currentTimeMillis() - startTime) / 1000.0 + " segundos.");
         System.out.println("Numero de nos visitados: "+nosVisitados+" \nNumero de nos gerados: "+nosGerados);
@@ -200,7 +198,7 @@ class IDfs {
 }
 
 class Bfs {
-  public Queue<Node> queue; 
+  public Queue<Node> queue;
   private Tabuleiro inicial;
   private Tabuleiro target;
   private long startTime;
