@@ -25,6 +25,7 @@ class Tabuleiro{
     Tabuleiro p1 = this;
     MatrixCopy(p1.posic,p2.posic);
     p1.zero = target;
+    System.out.println(p1.posic[p2.zero.getX()][p2.zero.getY()]);
     p1.posic[p2.zero.getX()][p2.zero.getY()]= new Integer(p1.posic[target.getX()][target.getY()]);
     p1.posic[target.getX()][target.getY()] = 0;
   }
