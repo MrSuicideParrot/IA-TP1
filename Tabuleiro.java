@@ -25,7 +25,6 @@ class Tabuleiro{
     Tabuleiro p1 = this;
     MatrixCopy(p1.posic,p2.posic);
     p1.zero = target;
-    System.out.println(p1.posic[p2.zero.getX()][p2.zero.getY()]);
     p1.posic[p2.zero.getX()][p2.zero.getY()]= new Integer(p1.posic[target.getX()][target.getY()]);
     p1.posic[target.getX()][target.getY()] = 0;
   }
@@ -89,11 +88,7 @@ class Tabuleiro{
           }
       }
     }
-    //System.out.println(number1+" "+number2);
-    //System.out.println(((((4-targetTab.zero.getY())%2 == 1) ) == (number2%2 == 0))+" "+((4-targetTab.zero.getY())%2 == 1)+" "+(number2%2 == 0));
-    //System.out.println(((((4-zero.getY())%2 == 1) ) == (number1%2 == 0))+" "+((4-zero.getY())%2 == 1)+" "+(number1%2 == 0));
-    //System.out.println(4-zero.getY()+" "+zero.getY());
-    return ( ( ((4-targetTab.zero.getY())%2 == 1) ) == (number2%2 == 0) ) == ( ( ((4-zero.getY())%2 == 1) ) == (number1%2 == 0) );
+    return ( ( ((4-targetTab.zero.getX())%2 == 1) ) == (number2%2 == 0) ) == ( ( ((4-zero.getX())%2 == 1) ) == (number1%2 == 0) );
 }
 
 /*
@@ -193,7 +188,7 @@ class Tabuleiro{
       for (int j=0;j<lado;++j)
         if(posic[i][j]==0){
           //System.out.println(i+" "+j);
-          return new Ponto(j,i);
+          return new Ponto(i,j);
         }
 
     //caso nao seja encontrado nenhum zero para o programa

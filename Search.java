@@ -5,7 +5,9 @@ import java.util.Queue;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 
-
+//
+// Astar
+//
 class Astar {
   public PriorityQueue<Node> queue;
   private Tabuleiro inicial;
@@ -13,8 +15,8 @@ class Astar {
   private long startTime;
 
   //contadores
-  private int nosGerados;
-  private int nosVisitados;
+  private long nosGerados;
+  private long nosVisitados;
 
   public Astar(Tabuleiro inicial,Tabuleiro target,long time){
     queue = new PriorityQueue<Node>();
@@ -32,7 +34,7 @@ class Astar {
       Node node = queue.poll();
       ++nosVisitados;
       if (node.tabu.equals(target)) {
-        System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura+" em "+(double)(System.currentTimeMillis() - startTime) / 1000.0 + " segundos.");
+        System.out.println("Numero sde jogadas encontradas:"+" "+node.altura+" em "+(double)(System.currentTimeMillis() - startTime) / 1000.0 + " segundos.");
         System.out.println("Numero de nos visitados: "+nosVisitados+" \nNumero de nos gerados: "+nosGerados);
         node.tabu.caminhoPrint(node.altura);
         return;
@@ -50,6 +52,9 @@ class Astar {
   }
 }
 
+//
+// Busca gulosa
+//
 class Gulosa {
   public PriorityQueue<Node> queue;
   private Tabuleiro inicial;
@@ -57,8 +62,8 @@ class Gulosa {
   private long startTime;
 
   //contadores
-  private int nosGerados;
-  private int nosVisitados;
+  private long nosGerados;
+  private long nosVisitados;
 
   public Gulosa(Tabuleiro inicial,Tabuleiro target,long time){
     queue = new PriorityQueue<Node>();
@@ -75,8 +80,12 @@ class Gulosa {
     while (!queue.isEmpty()) {
       Node node = queue.poll();
       ++nosVisitados;
+      if((double)(System.currentTimeMillis() - startTime) / 1000.0>= (double)60){
+        System.out.println("Numero de nos visitados: "+nosVisitados+" \nNumero de nos gerados: "+nosGerados);
+        System.exit(0);
+      }
       if (node.tabu.equals(target)) {
-        System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura+" em "+(double)(System.currentTimeMillis() - startTime) / 1000.0 + " segundos.");
+        System.out.println("Numero sde jogadas encontradas:"+" "+node.altura+" em "+(double)(System.currentTimeMillis() - startTime) / 1000.0 + " segundos.");
         System.out.println("Numero de nos visitados: "+nosVisitados+" \nNumero de nos gerados: "+nosGerados);
         node.tabu.caminhoPrint(node.altura);
         return;
@@ -92,6 +101,10 @@ class Gulosa {
   }
 }
 
+
+//
+// DFS
+//
 class Dfs {
   public LinkedList<Node> queue;
   private Tabuleiro inicial;
@@ -100,8 +113,8 @@ class Dfs {
   private long startTime;
 
   //contadores
-  private int nosGerados;
-  private int nosVisitados;
+  private long nosGerados;
+  private long nosVisitados;
 
   public Dfs(Tabuleiro inicial,Tabuleiro target,long time){
     queue = new LinkedList<Node>();
@@ -119,9 +132,13 @@ class Dfs {
     while (!queue.isEmpty()) {
       Node node = queue.poll();
       ++nosVisitados;
+      if((double)(System.currentTimeMillis() - startTime) / 1000.0>= (double)60){
+        System.out.println("Numero de nos visitados: "+nosVisitados+" \nNumero de nos gerados: "+nosGerados);
+        System.exit(0);
+      }
       mapa.add(node.tabu);
       if (node.tabu.equals(target)) {
-        System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura+" em "+(double)(System.currentTimeMillis() - startTime) / 1000.0 + " segundos.");
+        System.out.println("Numero sde jogadas encontradas:"+" "+node.altura+" em "+(double)(System.currentTimeMillis() - startTime) / 1000.0 + " segundos.");
         System.out.println("Numero de nos visitados: "+nosVisitados+" \nNumero de nos gerados: "+nosGerados);
         node.tabu.caminhoPrint(node.altura);
         return;
@@ -143,6 +160,9 @@ class Dfs {
   }
 }
 
+//
+//IDFS
+//
 class IDfs {
   public LinkedList<Node> queue;
   private Tabuleiro inicial;
@@ -152,8 +172,8 @@ class IDfs {
   private long startTime;
 
   //contadores
-  private int nosGerados;
-  private int nosVisitados;
+  private long nosGerados;
+  private long nosVisitados;
 
   public IDfs(Tabuleiro inicial,Tabuleiro target, int max, long time){
     queue = new LinkedList<Node>();
@@ -166,24 +186,23 @@ class IDfs {
   }
   public void generalSearchAlgorithm(){
     for (int i = 1;i<max ;++i ) {
-      Integer resul = generalSearchAlgorithm(i);
-      if(resul != null){
-        break;
-      }
+      generalSearchAlgorithm(i);
+      System.out.println("Altura "+i+", "+nosGerados+" nos gerados.");
     }
   }
 
-  private Integer generalSearchAlgorithm(int x){
+  private void generalSearchAlgorithm(int x){
     queue.add(new Node(inicial,0,3,target));
     ++nosGerados;
     while (!queue.isEmpty()) {
       Node node = queue.poll();
       ++nosVisitados;
       if (node.tabu.equals(target)) {
-        System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura+" em "+(double)(System.currentTimeMillis() - startTime) / 1000.0 + " segundos.");
+        System.out.println();
+        System.out.println("Numero sde jogadas encontradas:"+" "+node.altura+" em "+(double)(System.currentTimeMillis() - startTime) / 1000.0 + " segundos.");
         System.out.println("Numero de nos visitados: "+nosVisitados+" \nNumero de nos gerados: "+nosGerados);
         node.tabu.caminhoPrint(node.altura);
-        return node.altura;
+        System.exit(0);
       }
       else{
           if(node.altura<x)
@@ -193,19 +212,21 @@ class IDfs {
             }
       }
     }
-    return null;
   }
 }
 
+//
+//BFS
+//
 class Bfs {
   public Queue<Node> queue;
   private Tabuleiro inicial;
   private Tabuleiro target;
   private long startTime;
-
+  private HashSet<Tabuleiro> mapa;
   //contadores
-  private int nosGerados;
-  private int nosVisitados;
+  private long nosGerados;
+  private long nosVisitados;
 
   public Bfs(Tabuleiro inicial,Tabuleiro target, long time){
     queue = new LinkedList<Node>();
@@ -214,22 +235,29 @@ class Bfs {
     nosGerados = 0;
     nosVisitados = 0;
     startTime = time;
+    mapa = new HashSet<Tabuleiro>();
   }
 
   public void generalSearchAlgorithm(){
+    int count=0;
     queue.add(new Node(inicial,0,3,target));
     ++nosGerados;
     while (!queue.isEmpty()) {
       Node node = queue.poll();
       ++nosVisitados;
+      if(node.altura != count){
+        System.out.println("Altura "+node.altura+", "+nosGerados+" nos gerados.");
+        count = node.altura;
+      }
       if (node.tabu.equals(target)) {
-        System.out.println("Numero minimo de jogadas encontradas:"+" "+node.altura+" em "+(double)(System.currentTimeMillis() - startTime) / 1000.0 + " segundos.");
+        System.out.println();
+        System.out.println("Numero sde jogadas encontradas:"+" "+node.altura+" em "+(double)(System.currentTimeMillis() - startTime) / 1000.0 + " segundos.");
         System.out.println("Numero de nos visitados: "+nosVisitados+" \nNumero de nos gerados: "+nosGerados);
         node.tabu.caminhoPrint(node.altura);
         return;
       }
       else{
-            for(Tabuleiro tabu: node.tabu.makeDescendents(null)){
+            for(Tabuleiro tabu: node.tabu.makeDescendents(mapa)){
               Node aux = new Node(tabu, node.altura+1,3,target);
               ++nosGerados;
               queue.add(aux);
