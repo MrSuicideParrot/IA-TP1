@@ -81,14 +81,13 @@ class Tabuleiro{
     number1 = 0;
     for (int i = 0;i < lado*lado ;i++ ) {
       for (int j = i+1; j < lado*lado;j++){
-          if(inicial[j]!=0&&inicial[i]>inicial[j]){
+          if(inicial[j]!=0&&inicial[i]>inicial[j])
             number1+=1;
           if(target[j]!=0 && target[i]>target[j])
             number2+=1;
-          }
       }
     }
-    return ( ( ((4-targetTab.zero.getX())%2 == 1) ) == (number2%2 == 0) ) == ( ( ((4-zero.getX())%2 == 1) ) == (number1%2 == 0) );
+    return (( ( ((4-targetTab.zero.getX())%2 == 1) ) == (number2%2 == 0) ) == ( ( ((4-zero.getX())%2 == 1) ) == (number1%2 == 0) ));
 }
 
 /*
